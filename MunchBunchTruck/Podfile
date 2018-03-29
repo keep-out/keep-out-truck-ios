@@ -13,6 +13,7 @@ target 'MunchBunchTruck' do
   pod 'SwiftyJSON'
   pod 'SwiftyBeaver'
   pod 'TwitterKit'
+  pod 'RAMReel'
   pod 'GoogleAnalytics'
   pod 'Firebase/Core'
   pod 'Flurry-iOS-SDK/FlurrySDK' #Analytics Pod

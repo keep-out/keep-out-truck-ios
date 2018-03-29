@@ -7,29 +7,34 @@
 //
 
 import UIKit
+import RAMReel
 
-class SearchTruckViewController: UIViewController {
+class SearchTruckViewController: UIViewController, UICollectionViewDelegate {
+    
+    // Data
+    var dataSource: SimplePrefixQueryDataSource!
+    var ramReel: RAMReel<RAMCell, RAMTextField, SimplePrefixQueryDataSource>!
+    
+    // TODO: Delete dummy data
+    let data: [String] = ["Kevin", "Jimbus", "Justine", "Peanut", "Geralt", "Yennefer", "Richard", "Kahlan", "Roland"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        // TODO: Make networked call to get all truck names
+        dataSource = SimplePrefixQueryDataSource(data)
+        ramReel = RAMReel(frame: view.bounds, dataSource: dataSource, placeholder: "Start by typing…", attemptToDodgeKeyboard: true) {
+            print("Plain:", $0)
+        }
+        
+        // TODO: Replace with actual hooks
+        ramReel.hooks.append {
+            let r = Array($0.reversed())
+            let j = String(r)
+            print("Reversed:", j)
+        }
+        
+        view.addSubview(ramReel.view)
+        ramReel.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
