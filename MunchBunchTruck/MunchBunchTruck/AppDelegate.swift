@@ -7,6 +7,11 @@
 //
 
 import UIKit
+import SwiftyBeaver
+import TwitterKit
+import ChameleonFramework
+
+let log = SwiftyBeaver.self
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,7 +20,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        // Set navbar item color and background color
+        let navigationBarAppearance = UINavigationBar.appearance()
+        navigationBarAppearance.tintColor = UIColor.white
+        navigationBarAppearance.barTintColor = FlatGreen()
+        // Set navbar title text color
+        navigationBarAppearance.titleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.white]
+        
+        // Set the console and log file destination for the
+        let console = ConsoleDestination()
+        let file = FileDestination()
+        // Set format for logger
+        console.format = "$DHH:mm:ss$d $L $M"
+        log.addDestination(console)
+        log.addDestination(file)
+        
+        // Twitter init
+        TWTRTwitter.sharedInstance().start(withConsumerKey:"B1vBU6xSkzSHdIXNSdmTykril", consumerSecret:"oOTtJR1FFdbBExnIcW5T2Oy11jKhttd5qWcGLCcLNgNHqfGoD4")
+        
+        // Finished init
+        log.info("Application started")
+        
         return true
     }
 
